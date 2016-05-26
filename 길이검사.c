@@ -7,7 +7,7 @@ int main(void)
 	printf("문자열을 입력하세요:");
 	scanf("%s",&a[0]);	
 	for(x=0;x<=0;x++)
-		{idx=strlen(a[x])-1; //입력된 숫자의 자릿수 구하기 
+		{idx=strlen(a[x])-1; //입력된 숫자 자릿수 구하기 
 		 printf("%d\n",idx);	
 		 for(j=0;j<=idx;j++) //제대로 실행이 안됨 
 			if(a[x][j]=='.')
