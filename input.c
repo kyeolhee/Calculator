@@ -13,9 +13,9 @@ int main()
 	//dot 위치
 	for(i = 0; i <= 59; i++)
 		if(input[i] == '.') dot = i;
-
-
 	operand[50] = input[dot];
+	
+	
 	//정수 위치 배정
 	for(i = dot - 1, j = 49; j >= 0; i--, j--)
 	{
