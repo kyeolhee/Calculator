@@ -5,6 +5,7 @@ int main()
 	char input[60]={0}, operand[60]={0};
 	scanf("%s", input);
 
+
 	//input
 	for(i = 0; i <= 59; i++)
 		printf("input[%2d] = %c\n", i, input[i]);
