@@ -6,12 +6,12 @@ int main()
 	
 	//input
 	printf("Start . . .\n(input) ");
-	for(i = 0; i <= 1000; i++)
+	for(j = 0; j <= 1000; j++)
 	{
-		scanf("%s", input[i]);
+		scanf("%s", input[j]);
 		if(getchar() == '\n')
 		{
-			end = i;
+			end = j;
 			break;
 		}
 	}
