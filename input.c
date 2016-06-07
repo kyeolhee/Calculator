@@ -6,7 +6,8 @@ int main()
 {
 	int i, j, k, l, m, n, o, p, q, r, s, t, u, end;
 	char c;
-	printf("Input:");
+	printf("(input) ");
+
 	for(i = 0;i <= 10000; i++)
 	{
 		scanf("%s",input[i]);
@@ -16,8 +17,8 @@ int main()
 			break;
 		}	 
 	}
-	for(k = 0;k <= end; k++)		//소수점의 위치 찾기 + 소수점의 위치 배정 (소수점이 있는경우 >> 입력된 숫자가 정수가 아닌 실수인 경우)
-		for(l = 0;l<= 62;l++)
+	for(k = 0; k <= end; k++)		//소수점의 위치 찾기 + 소수점의 위치 배정 (소수점이 있는경우 >> 입력된 숫자가 정수가 아닌 실수인 경우)
+		for(l = 0; l <= 62; l++)
 		{
 			if(input[k][l] == '.') 
 			{
@@ -31,11 +32,11 @@ int main()
 		{
 			for(n = dot[m] - 1, o = 51; o >= 0; n--, o--)
 			{
-				if(n>=0&&input[m][n]!='-')
+				if(n>=0&&input[m][n] != '-')
 					pass_operand[m][o] = input[m][n];
-				else if (n==0&&input[m][n]=='-')
+				else if (n==0 && input[m][n] == '-')
 					pass_operand[m][1] = input[m][n];
-				else if (n < 0 && o>1)
+				else if (n < 0 && o > 1)
 					pass_operand[m][o] = '0';	 
 			}
 			for(r = dot[m] + 1, s = 53; s <= 61; r++, s++)
@@ -46,7 +47,7 @@ int main()
 					pass_operand[m][s] = '0';
 			}		
 		}	
-		else if(pass_operand[m][52]!='.')					//입력된 값이 정수인 경우의 정수부 위치 배정
+		else if(pass_operand[m][52] != '.')					//입력된 값이 정수인 경우의 정수부 위치 배정
 		{
 			for(n=strlen(input[m])-1, o=51;o>=0;n--,o--)
 			{
@@ -73,6 +74,12 @@ int main()
 		}
 		pass_operand[m][52]='.';
 	}
+
+
+
+
+
+
 	for(int i = 0;i <= end; i++)
 		for(int j = 0;j < 62; j++)
 			printf("pass_operand[%d][%d] = %c\n", i, j, pass_operand[i][j]);
