@@ -2,9 +2,11 @@
 #include <string.h>
 
 char input[1000][62], pass_operand[1000][62], dot[1000], result[62];
+char var[50][62]={'0'};
 
 int input_f(void);
 void pos_digit(int k);
+void variable(void);
 
 int main()
 {
@@ -16,11 +18,17 @@ int main()
     for(k = 0; k <= end; k++) //각 배열(0~end) 자리배정함수 호출
         pos_digit(k);
 
+	if((input[0][0] >= 'A' && input[0][0] <= 'Z') || (input[0][0] >= 'a' && input[0][0] <= 'z'))
+		if(input[1][0] == '=')
+			variable();
+
     for(int i = 0; i <= end; i++)   //(확인작업)
         for(int j = 0; j < 62; j++)
             printf("pass_operand[%d][%d] = %c\n", i, j, pass_operand[i][j]);
-    
+
+	printf("var[%d] = %c\n", i, var[0]);
     return 0;
+
 }
 
 
@@ -104,3 +112,15 @@ void pos_digit(int k)
     
     return ;
 }
+
+void variable(void)
+{
+	if(input[0][0] >= 'a' && input[0][0] <= 'z')
+		for(int i = 0; i <= 61; i++)
+			var[input[0][0] - 'a'][i] = pass_operand[2][i];
+	if(input[0][0] >= 'A' && input[0][0] <= 'Z')
+		for(int i = 0; i <= 61; i++)
+			var[input[0][0] - 'A'][i] = pass_operand[2][i];
+	return ;
+}
+
