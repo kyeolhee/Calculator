@@ -6,7 +6,8 @@ int main ()
         char c = 'a';
         char var[10][61] = {'@'};
         char tmp[100] = {0};
-        int i, j;
+        int i, j, k, m;
+        char gap;
         scanf("%[^\n]", a[0]); // 개행 되기 전까지 scanf로 받음
         for(;c<='z'; c++)
         {
@@ -34,12 +35,14 @@ int main ()
                         // 화면에 변수값 출력
                 }
         }
-	 for (i = 0; i <= 61; i++)
+	gap = 'A' - 'a';
+        for (i = 0; i <= 61; i++)
                 for (j = 0; j <= 61; j++)
                         if (a[i][j] <= 'z' && a[i][j] >= 'A')
-                                if (k = 0; k <= 9; k++)
-                                        strncasecmp (a[i][j] == var[k][0])
-                                                a
+                                for (k = 0; k <= 9; k++)
+                                         if (a[i][j] == var[k][0] || a[i][j] + gap == var[k][0] || a[i][j] - gap == var[k][0])
+                                                for (m = j; m <= 61; m++)
+                                                        a[i][m] = var[k][m-j+1];
         // 입력된 배열이 알파벳이면 그 알파벳을 var 배열의 0번째와 비교해서 맞으면 var배열의 1번째 값부터 배열에 다시 넣는다
         return 0;
 }
