@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 char input[1000][62], pass_operand[1000][62], dot[1000], result[62];
@@ -7,6 +8,7 @@ char var[50][62]={'0'};
 int input_f(void);
 void pos_digit(int k);
 void variable(void);
+void judg(void);
 
 int main()
 {
@@ -15,6 +17,8 @@ int main()
 
     end = input_f(); //입력함수 호출 및 end 리턴값 저장
     
+	judg();	//판단함수 호출
+	
     for(k = 0; k <= end; k++) //각 배열(0~end) 자리배정함수 호출
         pos_digit(k);
 
@@ -26,7 +30,8 @@ int main()
         for(int j = 0; j < 62; j++)
             printf("pass_operand[%d][%d] = %c\n", i, j, pass_operand[i][j]);
 
-	printf("var[%d] = %c\n", i, var[0]);
+	main();
+
     return 0;
 
 }
@@ -49,6 +54,7 @@ int input_f(void)
             break;
         }
 	}
+
 	return end;
 }
 
@@ -115,6 +121,7 @@ void pos_digit(int k)
 
 void variable(void)
 {
+	printf("variable call success\n");
 	if(input[0][0] >= 'a' && input[0][0] <= 'z')
 		for(int i = 0; i <= 61; i++)
 			var[input[0][0] - 'a'][i] = pass_operand[2][i];
@@ -124,3 +131,18 @@ void variable(void)
 	return ;
 }
 
+void judg(void)
+{
+	printf("judge call success\n");
+	if(strcmp(input[0], "clear") == 0)
+	{
+		printf("clear call\n");
+		system("clear");
+	}
+	if(strcmp(input[0], "end") == 0)	system("exit");
+	if(strcmp(input[0], "VAR") == 0)	;
+	if(strcmp(input[0], "save") == 0)	;
+	if(strcmp(input[0], "load") == 0)	;
+
+	return ;
+}
