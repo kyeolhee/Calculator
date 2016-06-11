@@ -9,7 +9,12 @@ int input_f(void);
 void pos_digit(int k);
 void variable(void);
 void judg(void);
+int operator(int);
+int plus_equal(int i);
+void savef(void);
+void loadf(void);
 
+//// MAIN ////
 int main()
 {
 	int i, k, end;
@@ -17,15 +22,27 @@ int main()
 
     end = input_f(); //입력함수 호출 및 end 리턴값 저장
     
-	judg();	//판단함수 호출
+    //명령판단함수
+	judg();
 	
-    for(k = 0; k <= end; k++) //각 배열(0~end) 자리배정함수 호출
+    //각 배열(0~end) 자리배정함수 호출
+    for(k = 0; k <= end; k++)
         pos_digit(k);
 
+    //변수 판단, 지정
 	if((input[0][0] >= 'A' && input[0][0] <= 'Z') || (input[0][0] >= 'a' && input[0][0] <= 'z'))
 		if(input[1][0] == '=')
 			variable();
 
+    //연산자 판단, 계산
+    for(int i = 1, i <= end; i++)
+    {
+        opertor(i);
+        i++;
+    }
+    
+    
+    
     for(int i = 0; i <= end; i++)   //(확인작업)
         for(int j = 0; j < 62; j++)
             printf("pass_operand[%d][%d] = %c\n", i, j, pass_operand[i][j]);
@@ -119,6 +136,7 @@ void pos_digit(int k)
     return ;
 }
 
+//변수(임시)
 void variable(void)
 {
 	printf("variable call success\n");
@@ -131,6 +149,7 @@ void variable(void)
 	return ;
 }
 
+//// 명 령 판 단 ////
 void judg(void)
 {
 	printf("judge call success\n");
@@ -140,9 +159,101 @@ void judg(void)
 		system("clear");
 	}
 	if(strcmp(input[0], "end") == 0)	system("exit");
-	if(strcmp(input[0], "VAR") == 0)	;
-	if(strcmp(input[0], "save") == 0)	;
-	if(strcmp(input[0], "load") == 0)	;
+    if(strcmp(input[0], "VAR") == 0)	;
+	if(strcmp(input[0], "save") == 0)	savef();
+	if(strcmp(input[0], "load") == 0)	loadf();
 
 	return ;
+}
+
+//// 변 수 저 장 함 수 ////
+void savef(void)
+{
+    FILE *save;
+    save = fopen("var_save.txt", "w");
+    for(int i = 0; i <= 10; i++)
+        fprintf(save, "%s", var[i]);
+    fclose(save);
+}
+
+//// 변 수 로 드 함 수 ////
+void loadf(void)
+{
+    FILE *save;
+    save = fopen("var_save.txt", "r");
+    for(int i = 0; i <= 10; i++)
+        fscanf(save, "%s", var[i]);
+    fclose(save);
+}
+
+//// 사 칙 연 산 판 단 함 수 ////
+int operator(int i)
+{
+	switch(pass_operand[i][0])
+        case '+':
+            if (pass_operand[i-1][1]==pass_operand[i+1][1])
+                    plus_equal();
+            else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
+                    plus_dif();
+            break;
+        case '-':
+            if (pass_operand[i-1][1]==pass_operand[i+1][1])
+                    minus_equal();
+            else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
+                    minus_dif();
+            break;
+        case '*':
+            if (pass_operand[i-1][1]==pass_operand[i+1][1])
+                    multi_equal();
+            else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
+                    multi_dif();
+            break;
+        case '/':
+            if (pass_operand[i-1][1]==pass_operand[i+1][1])
+            		divi_equal();
+            else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
+            		divi_dif();
+            break;
+        case '%':
+            if (pass_operand[i-1][1]==pass_operand[i+1][1])
+            		rest_equal();
+			else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
+    				rest_dif();
+    		break;
+        default :
+}
+
+//// 덧 셈 함 수 ////
+int plus_equal(void)   //부호같을때
+{
+    for(int j = 0; j < 62; j++)
+    {
+        pass_operand[i-1][j] = '0';
+        pass_operand[i+1][j] = '0';
+    }
+
+    for(int j = 0; j < 62; j++)
+        result[j] = '0';
+    
+    for(int j = 61; j > 1; j--)
+    {
+        result[j] = result[j] + pass_operand[i-1][j] + pass_operand[i+1][j] - '0'*2;
+        if(j!=53)											//소수점 아래 첫째 자리의 합이 10보다 큰 경우
+            if(result[j] > '9')											//덧셈 결과 자릿수가 9보다 큰 경우
+            {
+                result[j-1]++;
+                result[j] = result[j] - 10;
+            }
+        else if(result[j] > '9')												//덧셈 결과 자릿수가 9보다 큰 경우
+        {
+            result[j-2]++;
+            result[j] = result[j] - 10;
+        }
+    }
+    
+    result[52] = '.';
+    if(pass_operand[i-1][1] == '-' && pass_operand[i+1][1] == '-')
+        result[1] = '-';
+    //오류 코드 보내기 코딩 필요 
+    //중간 결과 값 저장 코딩 필요 
 }
