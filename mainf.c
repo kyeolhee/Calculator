@@ -10,7 +10,7 @@ void pos_digit(int k);
 void variable(void);
 void judg(void);
 int operator(int);
-int plus_equal(int i);
+int plus_equal(int);
 void savef(void);
 void loadf(void);
 
@@ -35,9 +35,9 @@ int main()
 			variable();
 
     //연산자 판단, 계산
-    for(int i = 1, i <= end; i++)
+    for(int i = 1; i <= end; i++)
     {
-        opertor(i);
+        operator(i);
         i++;
     }
     
@@ -71,6 +71,11 @@ int input_f(void)
             break;
         }
 	}
+
+	//pass_operand 초기화
+	for(int i = 0; i <= end; i++)
+		for(int j = 0; j <= 62; j++)
+			pass_operand[i][j] = '0';
 
 	return end;
 }
@@ -152,14 +157,9 @@ void variable(void)
 //// 명 령 판 단 ////
 void judg(void)
 {
-	printf("judge call success\n");
-	if(strcmp(input[0], "clear") == 0)
-	{
-		printf("clear call\n");
-		system("clear");
-	}
+	if(strcmp(input[0], "clear") == 0)	system("clear");
 	if(strcmp(input[0], "end") == 0)	system("exit");
-    if(strcmp(input[0], "VAR") == 0)	;
+    if(strcmp(input[0], "VAR") == 0)	printf("var call\n");
 	if(strcmp(input[0], "save") == 0)	savef();
 	if(strcmp(input[0], "load") == 0)	loadf();
 
@@ -169,6 +169,7 @@ void judg(void)
 //// 변 수 저 장 함 수 ////
 void savef(void)
 {
+	printf("savef call\n");
     FILE *save;
     save = fopen("var_save.txt", "w");
     for(int i = 0; i <= 10; i++)
@@ -179,6 +180,7 @@ void savef(void)
 //// 변 수 로 드 함 수 ////
 void loadf(void)
 {
+	printf("loadf call\n");
     FILE *save;
     save = fopen("var_save.txt", "r");
     for(int i = 0; i <= 10; i++)
@@ -189,43 +191,48 @@ void loadf(void)
 //// 사 칙 연 산 판 단 함 수 ////
 int operator(int i)
 {
+	printf("operator call\n");
 	switch(pass_operand[i][0])
-        case '+':
+	{
+		case '+':
             if (pass_operand[i-1][1]==pass_operand[i+1][1])
-                    plus_equal();
-            else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
-                    plus_dif();
+                    plus_equal(i);
+//            else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
+//                    plus_dif();
             break;
         case '-':
-            if (pass_operand[i-1][1]==pass_operand[i+1][1])
-                    minus_equal();
-            else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
-                    minus_dif();
+//            if (pass_operand[i-1][1]==pass_operand[i+1][1])
+//                    minus_equal();
+//            else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
+//                    minus_dif();
             break;
         case '*':
-            if (pass_operand[i-1][1]==pass_operand[i+1][1])
-                    multi_equal();
-            else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
-                    multi_dif();
+//            if (pass_operand[i-1][1]==pass_operand[i+1][1])
+//                    multi_equal();
+//            else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
+//                   multi_dif();
             break;
         case '/':
-            if (pass_operand[i-1][1]==pass_operand[i+1][1])
-            		divi_equal();
-            else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
-            		divi_dif();
+//            if (pass_operand[i-1][1]==pass_operand[i+1][1])
+//            		divi_equal();
+//            else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
+//            		divi_dif();
             break;
         case '%':
-            if (pass_operand[i-1][1]==pass_operand[i+1][1])
-            		rest_equal();
-			else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
-    				rest_dif();
+//            if (pass_operand[i-1][1]==pass_operand[i+1][1])
+//            		rest_equal();
+//			else if(pass_operand[i-1][1]!=pass_operand[i+1][1])
+//    				rest_dif();
     		break;
         default :
+			break;
+	}
 }
 
 //// 덧 셈 함 수 ////
-int plus_equal(void)   //부호같을때
+int plus_equal(int i)   //부호같을때
 {
+	printf("plus call\n");
     for(int j = 0; j < 62; j++)
     {
         pass_operand[i-1][j] = '0';
@@ -256,4 +263,5 @@ int plus_equal(void)   //부호같을때
         result[1] = '-';
     //오류 코드 보내기 코딩 필요 
     //중간 결과 값 저장 코딩 필요 
+	return 0;
 }
