@@ -47,12 +47,10 @@ int main()
         for(int j = 0; j < 62; j++)
             printf("pass_operand[%d][%d] = %c\n", i, j, pass_operand[i][j]);
 
+
 	main();
-
     return 0;
-
 }
-
 
 
 //// 입 력 함 수 ////
@@ -75,7 +73,7 @@ int input_f(void)
 	//pass_operand 초기화
 	for(int i = 0; i <= end; i++)
 		for(int j = 0; j <= 62; j++)
-			pass_operand[i][j] = '0';
+			pass_operand[i][j] = 0;
 
 	return end;
 }
@@ -173,7 +171,7 @@ void savef(void)
     FILE *save;
     save = fopen("var_save.txt", "w");
     for(int i = 0; i <= 10; i++)
-        fprintf(save, "%s", var[i]);
+        fprintf(save, "%s", pass_operand[i]);	//테스트. 변수배열로 수정 필요
     fclose(save);
 }
 
